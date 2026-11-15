@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   description:
     "Designer poshaks handmade in Vrindavan. Zardozi, gota-patti and resham, stitched to order with His name embroidered in thread.",
-  icons: { icon: "/images/logo.png" },
+  icons: { icon: "/images/logo-wordmark.jpg" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

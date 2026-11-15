@@ -152,7 +152,7 @@ export function SiteHeader() {
       <header>
         <div className="dk-bar">
           <Link href="/" aria-label="DivineKraft home">
-            <img className="dk-logo" src="/images/logo.png" alt="DivineKraft" />
+            <img className="dk-logo" src="/images/logo-wordmark.jpg" alt="DivineKraft" />
           </Link>
           <nav aria-label="Main">
             {LINKS.map((link) => {

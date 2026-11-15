@@ -6,7 +6,7 @@ export function SiteFooter() {
       <div className="dk-footer-grid">
         <div>
           <span className="dk-footer-logo">
-            <img src="/images/logo.png" alt="DivineKraft" />
+            <img src="/images/logo-wordmark.jpg" alt="DivineKraft" />
           </span>
           <p>Designer poshaks, handmade in Vrindavan for your Thakurji.</p>
         </div>

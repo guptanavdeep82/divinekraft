@@ -152,6 +152,17 @@ export function Enhance() {
       const button = target.closest("button");
       if (!button) return;
 
+      const choice = button.getAttribute("data-personal-choice");
+      if (choice) {
+        const panel = button.closest(".dk-personal");
+        panel?.querySelectorAll<HTMLButtonElement>("[data-personal-choice]").forEach((item) => {
+          paint(item, item === button, "chip");
+        });
+        const fields = panel?.querySelector<HTMLElement>(".dk-personal-fields");
+        if (fields) fields.hidden = choice !== "yes";
+        return;
+      }
+
       const label = button.getAttribute("aria-label") || "";
       if (label.startsWith("Image ")) {
         const thumb = button.querySelector("img");
@@ -235,6 +246,11 @@ export function Enhance() {
           const show = !q || (item.textContent || "").toLowerCase().includes(q);
           (item as HTMLElement).style.display = show ? "" : "none";
         });
+        return;
+      }
+      if (input.id === "naam") {
+        const preview = document.getElementById("naam-preview");
+        if (preview) preview.textContent = input.value.trim() || "Your inscription";
         return;
       }
       if (input.maxLength !== 1) return;

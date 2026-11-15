@@ -4,33 +4,52 @@ import { useEffect, useRef, useState } from "react";
 
 export function Bhajan() {
   const audio = useRef<HTMLAudioElement>(null);
+  const userPaused = useRef(false);
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const track = audio.current;
     if (!track) return;
+    track.loop = true;
     track.volume = 0.55;
-    let started = false;
+    track.currentTime = 0;
 
-    const start = () => {
-      if (started) return;
-      track
-        .play()
-        .then(() => {
-          started = true;
-          setPlaying(true);
-          window.removeEventListener("pointerdown", start);
-          window.removeEventListener("keydown", start);
-        })
-        .catch(() => setPlaying(false));
+    const begin = () => {
+      if (userPaused.current) return;
+      if (!track.paused) {
+        setPlaying(true);
+        return;
+      }
+      const attempt = track.play();
+      attempt
+        ?.then(() => setPlaying(true))
+        .catch(() => {
+          if (track.paused) setPlaying(false);
+        });
     };
 
-    start();
-    window.addEventListener("pointerdown", start);
-    window.addEventListener("keydown", start);
+    const onGesture = () => begin();
+    const events = ["pointerdown", "touchstart", "touchend", "click", "keydown", "scroll"] as const;
+    for (const event of events) {
+      window.addEventListener(event, onGesture, { capture: true, passive: true });
+    }
+
+    const onVisible = () => {
+      if (document.visibilityState === "visible") begin();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("pageshow", begin);
+    track.addEventListener("canplay", begin);
+
+    begin();
+
     return () => {
-      window.removeEventListener("pointerdown", start);
-      window.removeEventListener("keydown", start);
+      for (const event of events) {
+        window.removeEventListener(event, onGesture, { capture: true });
+      }
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("pageshow", begin);
+      track.removeEventListener("canplay", begin);
     };
   }, []);
 
@@ -38,16 +57,18 @@ export function Bhajan() {
     const track = audio.current;
     if (!track) return;
     if (track.paused) {
+      userPaused.current = false;
       track.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-    } else {
-      track.pause();
-      setPlaying(false);
+      return;
     }
+    userPaused.current = true;
+    track.pause();
+    setPlaying(false);
   }
 
   return (
     <>
-      <audio ref={audio} src="/audio/krishna-flute.mp3" loop preload="auto" />
+      <audio ref={audio} src="/audio/krishna-flute.mp3" loop autoPlay preload="auto" />
       <button type="button" className="dk-bhajan" onClick={toggle} aria-pressed={playing}>
         {playing ? "Pause flute" : "Play flute"}
       </button>

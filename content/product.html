@@ -42,7 +42,7 @@
 </div>
 <div style="display: flex; flex-direction: column; gap: 4px">
 <span style="font-size: 30px; font-weight: 600">₹[PRICE]</span>
-<span style="font-size: 13px; color: #5E4E44">Includes name embroidery · Prepaid · Made to order: ships in 12–15 days</span>
+<span style="font-size: 13px; color: #5E4E44">Name embroidery optional · Prepaid · Made to order: ships in 12–15 days</span>
 </div>
 
 <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
@@ -69,18 +69,37 @@
 </div>
 </fieldset>
 
-<div style="background: #FFFFFF; border: 1px solid #E6D9C6; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
-<label for="naam" style="font-weight: 600; font-size: 15px">His name to embroider</label>
-<input id="naam" type="text" value="Lalla" style="height: 46px; border: 1px solid #CDBCA4; border-radius: 10px; padding: 0 14px; font-size: 16px; font-family: inherit">
-<div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px">
-<button aria-pressed="true" style="height: 40px; padding: 0 14px; border: 2px solid #7A1E2C; background: #F7E9EA; color: #7A1E2C; border-radius: 999px; font-weight: 600; cursor: pointer">देवनागरी</button>
-<button style="height: 40px; padding: 0 14px; border: 1px solid #CDBCA4; background: #FFFFFF; border-radius: 999px; cursor: pointer">English</button>
-<button style="height: 40px; padding: 0 14px; border: 1px solid #CDBCA4; background: #FFFFFF; border-radius: 999px; cursor: pointer">Gold zari</button>
-<button style="height: 40px; padding: 0 14px; border: 1px solid #CDBCA4; background: #FFFFFF; border-radius: 999px; cursor: pointer">Silver zari</button>
+<div class="dk-personal" style="background: #FFFFFF; border: 1px solid #E6D9C6; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<strong style="font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; line-height: 1.15">Personalise Your Thakurji's Poshak</strong>
+<span style="font-size: 14px; color: #5E4E44">Add a name or devotional inscription to make your poshak special.</span>
 </div>
-<div style="background: #F4ECDF; border-radius: 10px; padding: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px">
-<span style="font-family: 'Tiro Devanagari Hindi', serif; font-size: 30px; color: #7A1E2C">लल्ला</span>
-<span style="font-size: 12px; color: #5E4E44; text-align: right">Live preview. Our team confirms the<br>final spelling with you before stitching</span>
+<p style="margin: 0; font-weight: 600; font-size: 15px">Would you like to personalise this poshak?</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" data-personal-choice="yes" aria-pressed="false" style="min-height: 44px; padding: 8px 14px; border: 1px solid #CDBCA4; background: #FFFFFF; border-radius: 999px; cursor: pointer; font-weight: 500">Yes, personalise it.</button>
+<button type="button" data-personal-choice="no" aria-pressed="true" style="min-height: 44px; padding: 8px 14px; border: 2px solid #7A1E2C; background: #F7E9EA; color: #7A1E2C; border-radius: 999px; cursor: pointer; font-weight: 600">No, continue without personalisation.</button>
+</div>
+<div class="dk-personal-fields" hidden style="display: flex; flex-direction: column; gap: 12px">
+<label for="naam" style="font-weight: 600; font-size: 15px">Name to embroider <span style="font-weight: 500; color: #5E4E44">· optional</span></label>
+<input id="naam" type="text" value="" placeholder="Lalla" style="height: 46px; border: 1px solid #CDBCA4; border-radius: 10px; padding: 0 14px; font-size: 16px; font-family: inherit; width: 100%; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 600; color: #5E4E44">Script</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px">
+<button type="button" aria-pressed="true" style="height: 40px; padding: 0 14px; border: 2px solid #7A1E2C; background: #F7E9EA; color: #7A1E2C; border-radius: 999px; font-weight: 600; cursor: pointer">Devanagari</button>
+<button type="button" aria-pressed="false" style="height: 40px; padding: 0 14px; border: 1px solid #CDBCA4; background: #FFFFFF; border-radius: 999px; cursor: pointer">English</button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 600; color: #5E4E44">Embroidery</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px">
+<button type="button" aria-pressed="true" style="height: 40px; padding: 0 14px; border: 2px solid #7A1E2C; background: #F7E9EA; color: #7A1E2C; border-radius: 999px; font-weight: 600; cursor: pointer">Gold Zari</button>
+<button type="button" aria-pressed="false" style="height: 40px; padding: 0 14px; border: 1px solid #CDBCA4; background: #FFFFFF; border-radius: 999px; cursor: pointer">Silver Zari</button>
+</div>
+</div>
+<div style="background: #F4ECDF; border-radius: 10px; padding: 14px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<span id="naam-preview" style="font-family: 'Tiro Devanagari Hindi', serif; font-size: 30px; color: #7A1E2C">Your inscription</span>
+<span style="font-size: 12px; color: #5E4E44">Live preview. Our team confirms the final spelling with you before stitching.</span>
+</div>
 </div>
 </div>
 
@@ -92,8 +111,8 @@
 </fieldset>
 
 <div style="display: flex; flex-direction: column; gap: 10px">
-<a href="/cart" style="height: 56px; border: 0; background: #7A1E2C; color: #FFF8EE; border-radius: 999px; font-size: 16px; font-weight: 600; cursor: pointer">Order this design · ₹[PRICE]</a>
-<p style="margin: 0; font-size: 13px; color: #5E4E44; text-align: center">Personalised and made to order, so it can't be returned. Free redo if the size is wrong because of us.</p>
+<a href="/cart" style="height: 56px; border: 0; background: #7A1E2C; color: #FFF8EE; border-radius: 999px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; width: 100%; box-sizing: border-box">Order this design · ₹[PRICE]</a>
+<p style="margin: 0; font-size: 13px; color: #5E4E44; text-align: center">Made to order, so it can't be returned. Free redo if the size is wrong because of us.</p>
 </div>
 
 <div style="border: 1.5px solid #7A1E2C; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 14px; background: #FFFFFF">

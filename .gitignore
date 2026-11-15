@@ -1,0 +1,7 @@
+node_modules
+.next
+out
+*.log
+_artifact.html
+_canvas.json
+_blobs.txt

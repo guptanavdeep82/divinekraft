@@ -13,6 +13,50 @@ const LINKS = [
   { href: "/about", label: "About" },
 ];
 
+const SHEET = [
+  {
+    title: "Shop",
+    links: [
+      { href: "/collections", label: "Collections" },
+      { href: "/custom", label: "Custom design" },
+      { href: "/wishlist", label: "Wishlist" },
+      { href: "/cart", label: "Cart" },
+    ],
+  },
+  {
+    title: "The house",
+    links: [
+      { href: "/#how", label: "How it works" },
+      { href: "/#karigars", label: "Our karigars" },
+      { href: "/journal", label: "Journal" },
+      { href: "/about", label: "About" },
+      { href: "/size-guide", label: "Size guide" },
+    ],
+  },
+  {
+    title: "Help",
+    links: [
+      { href: "/faq", label: "FAQ" },
+      { href: "/track", label: "Track order" },
+      { href: "/contact", label: "Contact" },
+      { href: "/account", label: "My account" },
+    ],
+  },
+];
+
+const TABS = [
+  { href: "/", label: "Home" },
+  { href: "/collections", label: "Shop" },
+  { href: "/custom", label: "Custom" },
+  { href: "/cart", label: "Cart", badge: "2" },
+  { href: "/account", label: "Account" },
+];
+
+function tabOn(href: string, pathname: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 function Icon({ children, label, href, badge }: { children: React.ReactNode; label: string; href?: string; badge?: string }) {
   const inner = (
     <>
@@ -34,6 +78,48 @@ function Icon({ children, label, href, badge }: { children: React.ReactNode; lab
   );
 }
 
+function TabIcon({ name }: { name: string }) {
+  if (name === "Home") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z" />
+      </svg>
+    );
+  }
+  if (name === "Shop") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4" y="4" width="7" height="7" rx="1.5" />
+        <rect x="13" y="4" width="7" height="7" rx="1.5" />
+        <rect x="4" y="13" width="7" height="7" rx="1.5" />
+        <rect x="13" y="13" width="7" height="7" rx="1.5" />
+      </svg>
+    );
+  }
+  if (name === "Custom") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 20l4.2-1.1L19 8.1 15.9 5 5.1 15.8z" />
+        <path d="M13.8 7.2l3 3" />
+      </svg>
+    );
+  }
+  if (name === "Cart") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 7h14l-1.5 12h-11z" />
+        <path d="M9 7a3 3 0 0 1 6 0" />
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="8" r="3.2" />
+      <path d="M5 20c1.4-3.4 3.8-5 7-5s5.6 1.6 7 5" />
+    </svg>
+  );
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -41,6 +127,19 @@ export function SiteHeader() {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    document.body.classList.toggle("dk-nav-open", open);
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.classList.remove("dk-nav-open");
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   return (
     <>
@@ -55,7 +154,7 @@ export function SiteHeader() {
           <Link href="/" aria-label="DivineKraft home">
             <img className="dk-logo" src="/images/logo.png" alt="DivineKraft" />
           </Link>
-          <nav aria-label="Main" className={open ? "is-open" : undefined}>
+          <nav aria-label="Main">
             {LINKS.map((link) => {
               const active = link.href === pathname;
               return (
@@ -106,6 +205,55 @@ export function SiteHeader() {
           </div>
         </div>
       </header>
+      {open ? (
+        <div className="dk-sheet-root">
+          <button type="button" className="dk-sheet-backdrop" aria-label="Close menu" onClick={() => setOpen(false)} />
+          <div className="dk-sheet" role="dialog" aria-modal="true" aria-label="Menu">
+            <div className="dk-sheet-handle" aria-hidden="true" />
+            <div className="dk-sheet-head">
+              <div>
+                <strong>DivineKraft</strong>
+                <span>Radhe Radhe</span>
+              </div>
+              <button type="button" className="dk-sheet-close" aria-label="Close menu" onClick={() => setOpen(false)}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              </button>
+            </div>
+            <div className="dk-sheet-scroll">
+              {SHEET.map((group) => (
+                <section key={group.title}>
+                  <p>{group.title}</p>
+                  {group.links.map((link) => (
+                    <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
+                      <span>{link.label}</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                        <path d="M9 6l6 6-6 6" />
+                      </svg>
+                    </Link>
+                  ))}
+                </section>
+              ))}
+            </div>
+            <Link href="/custom" className="dk-sheet-cta" onClick={() => setOpen(false)}>
+              Plan a custom poshak
+            </Link>
+          </div>
+        </div>
+      ) : null}
+      <nav className="dk-tabs" aria-label="App">
+        {TABS.map((tab) => {
+          const active = tabOn(tab.href, pathname);
+          return (
+            <Link key={tab.href} href={tab.href} className={active ? "is-active" : undefined} aria-current={active ? "page" : undefined}>
+              <TabIcon name={tab.label} />
+              <span>{tab.label}</span>
+              {tab.badge ? <b>{tab.badge}</b> : null}
+            </Link>
+          );
+        })}
+      </nav>
     </>
   );
 }

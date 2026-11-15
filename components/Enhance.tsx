@@ -93,6 +93,23 @@ export function Enhance() {
   }, [pathname]);
 
   useEffect(() => {
+    const aside = document.querySelector<HTMLElement>('aside[aria-label="Filters"]');
+    if (!aside || aside.previousElementSibling?.classList.contains("dk-filter-toggle")) return;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "dk-filter-toggle";
+    button.textContent = "Filters";
+    button.setAttribute("aria-expanded", "false");
+    button.addEventListener("click", () => {
+      const next = aside.classList.toggle("is-open");
+      button.setAttribute("aria-expanded", String(next));
+      button.textContent = next ? "Hide filters" : "Filters";
+    });
+    aside.before(button);
+    return () => button.remove();
+  }, [pathname]);
+
+  useEffect(() => {
     const onClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
       if (!target) return;

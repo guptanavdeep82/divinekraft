@@ -4,15 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const LINKS = [
-  { href: "/collections", label: "Collections" },
-  { href: "/custom", label: "Custom design" },
-  { href: "/#how", label: "How it works" },
-  { href: "/#karigars", label: "Our karigars" },
-  { href: "/journal", label: "Journal" },
-  { href: "/about", label: "About" },
-];
-
 const SHEET = [
   {
     title: "Shop",
@@ -26,8 +17,8 @@ const SHEET = [
   {
     title: "The house",
     links: [
-      { href: "/#how", label: "How it works" },
-      { href: "/#karigars", label: "Our karigars" },
+      { href: "/custom", label: "How it works" },
+      { href: "/#poshaks", label: "The poshaks" },
       { href: "/journal", label: "Journal" },
       { href: "/about", label: "About" },
       { href: "/size-guide", label: "Size guide" },
@@ -144,26 +135,38 @@ export function SiteHeader() {
   return (
     <>
       <div className="dk-announce">
-        <span className="dk-diya dk-diya-sm" aria-hidden="true">
-          <span className="dk-flame" />
-        </span>
-        Handmade in Vrindavan · Made to order, never off the shelf · His name embroidered on every poshak
+        <span>Sardi Seva is live: velvet &amp; woollen poshaks</span>
+        <span className="dk-announce-gold">His name embroidered free</span>
+        <span>Free shipping above ₹2,499</span>
+        <span>Vivah Panchami: order by 28 Nov</span>
       </div>
       <header>
         <div className="dk-bar">
           <Link href="/" aria-label="DivineKraft home">
-            <img className="dk-logo" src="/images/logo-wordmark.jpg" alt="DivineKraft" />
+            <img className="dk-logo" src="/images/logo-wordmark.png" alt="DivineKraft" />
           </Link>
-          <nav aria-label="Main">
-            {LINKS.map((link) => {
-              const active = link.href === pathname;
-              return (
-                <Link key={link.href} href={link.href} className={active ? "is-active" : undefined}>
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
+          <form className="dk-find" role="search" aria-label="Search" onSubmit={(event) => event.preventDefault()}>
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5E4E44" strokeWidth="1.7">
+              <circle cx="11" cy="11" r="7" />
+              <path d="M20 20l-4-4" />
+            </svg>
+            <input readOnly placeholder="Search for poshak, deity, pichwai, mukut… or in हिंदी" aria-label="Search poshaks" />
+            <button type="submit">Search</button>
+          </form>
+          <Link href="/account" className="dk-pill">
+            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
+            <span>Login</span>
+          </Link>
+          <Link href="/wishlist" className="dk-pill">
+            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z" /></svg>
+            <span>Wishlist</span>
+            <b>5</b>
+          </Link>
+          <Link href="/cart" className="dk-pill">
+            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M5 7h14l-1.5 12h-11z" /><path d="M9 7a3 3 0 0 1 6 0" /></svg>
+            <span>Cart</span>
+            <b>2</b>
+          </Link>
           <div className="dk-tools">
             <button
               type="button"
@@ -204,6 +207,14 @@ export function SiteHeader() {
             </Link>
           </div>
         </div>
+        <nav className="dk-cats" aria-label="Categories">
+          <Link href="/collections">Home Poshak</Link>
+          <Link href="/collections">Pichwai</Link>
+          <Link href="/collections">Shringaar</Link>
+          <Link href="/collections">Temple Dresses</Link>
+          <Link href="/custom">Custom Design</Link>
+          <Link href="/collections" className="is-green">Sardi Seva</Link>
+        </nav>
       </header>
       {open ? (
         <div className="dk-sheet-root">

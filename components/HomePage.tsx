@@ -1,313 +1,320 @@
+"use client";
+
 import Link from "next/link";
-import { ProductRail } from "@/components/ProductRail";
+import { useRef, useState } from "react";
 
-const COLLECTIONS = [
+const SLIDES = [
   {
-    href: "/collections",
-    image: "/images/211bc59b6dde1cddf12b721c44fcf19a.jpg",
-    name: "Nitya Seva",
-    note: "Fine handwork for daily shringar",
-    price: "From ₹2,450",
-    time: "7–10 days",
+    eyebrow: "Sardi Seva · Nov to Feb",
+    title: "Keep Him warm this winter",
+    sub: "Velvet poshaks, woollen sets, topi, shawl and razai, hand-embroidered in Vrindavan with His name.",
+    cta: "Shop Sardi Seva",
+    cta2: "Browse all poshaks",
+    note: "Order today, arrives by 29 Nov",
+    img: "/images/00f81a265cffcaef86d2d0fd56a349a7.jpg",
+    img2: "/images/211bc59b6dde1cddf12b721c44fcf19a.jpg",
+    alt: "Shahi Mor Velvet Poshak",
+    chipTop: "Winter favourite",
+    chip: "Velvet + stones",
+    bg: "#5A1220",
   },
   {
-    href: "/product/mor-mukut-peela-poshak",
-    image: "/images/99c51cc19ef35e1464d8d2573846f133.jpg",
-    name: "Utsav",
-    note: "Festival sets with matching shringar",
-    price: "From ₹4,850",
-    time: "12–15 days",
+    eyebrow: "Vivah Panchami · Mon, 14 Dec",
+    title: "Ivory & pearl for the divine wedding",
+    sub: "Moti, hans and stone-work poshaks for Ram-Sita vivah utsav, with matching shringaar.",
+    cta: "Shop Vivah Panchami",
+    cta2: "See festival store",
+    note: "Order by 28 Nov for on-time delivery",
+    img: "/images/099df3db2817e17bf0bce51733883d0c.jpg",
+    img2: "/images/d366a4f2ddf15f4b6365b213c0a74bab.jpg",
+    alt: "Moti Hans Ivory Poshak",
+    chipTop: "27 days to go",
+    chip: "Order by 28 Nov",
+    bg: "#8E1F4A",
   },
   {
-    href: "/collections",
-    image: "/images/d366a4f2ddf15f4b6365b213c0a74bab.jpg",
-    name: "Heirloom",
-    note: "Couture pieces, signed by the karigar",
-    price: "From ₹12,400",
-    time: "20–30 days",
-  },
-  {
-    href: "/collections",
-    image: "/images/00f81a265cffcaef86d2d0fd56a349a7.jpg",
-    name: "Jugal Jodi",
-    note: "Matching sets for Radha Krishna",
-    price: "From ₹8,600",
-    time: "As per tier",
+    eyebrow: "Custom design",
+    title: "Your design, in His size",
+    sub: "Send a photo of any poshak you love. Our designers plan it with you. Nothing to pay until you approve.",
+    cta: "Start a custom design",
+    href: "/custom",
+    cta2: "How it works",
+    note: "Free design consult on WhatsApp",
+    img: "/images/6c8b5180806f0b3f31905b7b0831b0be.jpg",
+    img2: "/images/dcf20fc07739ccbd76b2a14b3ca33edd.jpg",
+    alt: "Rangeela Kamal Resham Poshak",
+    chipTop: "Name included",
+    chip: "लल्ला",
+    bg: "#123F6B",
   },
 ];
 
-const STEPS = [
-  {
-    n: "01",
-    when: "Day 0",
-    title: "Share your brief",
-    copy: "Send a photograph of your Thakurji beside a scale, His height and shoulder, the name you call Him, and the occasion. Reference pictures help. A designer writes back within one working day.",
-    image: "/images/diya-marigold.jpg",
-    alt: "A lit brass diya and marigolds",
-  },
-  {
-    n: "02",
-    when: "Day 1–2",
-    title: "Sit with a designer",
-    copy: "On a call you settle colour, motif, and how heavy the zari should be. Mukut, bansuri, patka, and whether Radha ji is dressed with Him. The drawing follows this conversation.",
-    image: "/images/karigar-hands.jpg",
-    alt: "A karigar stitching gold zari on yellow silk",
-  },
-  {
-    n: "03",
-    when: "Day 3–4",
-    title: "Approve the board",
-    copy: "You receive a concept and an itemised price: fabric, handwork, the name, and the shringar. Two revisions are included. The advance is taken only after you approve.",
-    image: "/images/zari-detail.jpg",
-    alt: "Close view of peacock zari and stones on yellow silk",
-  },
-  {
-    n: "04",
-    when: "Before the finish",
-    title: "See His name",
-    copy: "The spelling is embroidered in Devanagari or English, gold or silver zari, and photographed for you. If a letter is wrong, the stitches are opened and done again before the poshak leaves the adda.",
-    image: "/images/thakur-portrait.jpg",
-    alt: "Laddu Gopal, for whom the name is embroidered",
-  },
-  {
-    n: "05",
-    when: "About 3 weeks",
-    title: "Stitched, checked, sent",
-    copy: "The karigar sends photos at cutting, halfway, and finish, then a short video of the completed poshak. It is folded in butter paper and dispatched from Vrindavan in a maroon keepsake box.",
-    image: "/images/keepsake-box.jpg",
-    alt: "A folded poshak tied with gold ribbon inside a maroon keepsake box",
-  },
-];
+const LISTS = [
+  [
+    ["99c51cc19ef35e1464d8d2573846f133", "Mor Mukut Peela", "Utsav · Zardozi, stones", "4 Dec", "Bestseller", "#7A1E2C", "₹4,850"],
+    ["b5989acf165fdf017276f956966c1925", "Mayur Rang", "Utsav · Zardozi, stones", "4 Dec", "Bestseller", "#7A1E2C", "₹5,400"],
+    ["d366a4f2ddf15f4b6365b213c0a74bab", "Hans Jodi Stone", "Heirloom · Stone work", "19 Dec", "Bestseller", "#7A1E2C", "₹12,400"],
+    ["934c7631087da1ca07df879df48b1149", "Nritya Mor Peela", "Utsav · Resham, zardozi", "4 Dec", "Bestseller", "#7A1E2C", "₹3,200"],
+    ["e05eea7b0a24cbccba1fc7ecd402ba53", "Mor Chakra Zardozi", "Heirloom · Zardozi collar", "19 Dec", "Bestseller", "#7A1E2C", "₹9,700"],
+  ],
+  [
+    ["6c8b5180806f0b3f31905b7b0831b0be", "Rangeela Kamal", "Utsav · Resham", "4 Dec", "New", "#1F5E45", "₹4,200"],
+    ["b91ce095858e92b7e07c2cf71b5b8a85", "Kairi Mor Pankh", "Utsav · Sequins, stones", "4 Dec", "New", "#1F5E45", "₹4,850"],
+    ["211bc59b6dde1cddf12b721c44fcf19a", "Neelkamal Resham", "Nitya Seva · Resham", "29 Nov", "New", "#1F5E45", "₹2,450"],
+    ["4da02c408340cca173272c167cabc92e", "Van Mor Gota", "Utsav · Gota, fringe", "4 Dec", "New", "#1F5E45", "₹7,200"],
+  ],
+  [
+    ["211bc59b6dde1cddf12b721c44fcf19a", "Neelkamal Resham", "Nitya Seva · Resham", "29 Nov", "7–10 days", "#123F6B", "₹2,450"],
+    ["99c51cc19ef35e1464d8d2573846f133", "Mor Mukut Peela", "Utsav · Zardozi, stones", "4 Dec", "12–15 days", "#123F6B", "₹4,850"],
+    ["b91ce095858e92b7e07c2cf71b5b8a85", "Kairi Mor Pankh", "Utsav · Sequins, stones", "4 Dec", "12–15 days", "#123F6B", "₹4,850"],
+  ],
+  [
+    ["00f81a265cffcaef86d2d0fd56a349a7", "Shahi Mor Velvet", "Heirloom · Velvet, stones", "19 Dec", "Sardi", "#0F4D3A", "₹8,600"],
+    ["e05eea7b0a24cbccba1fc7ecd402ba53", "Mor Chakra Zardozi", "Heirloom · Zardozi collar", "19 Dec", "Sardi", "#0F4D3A", "₹9,700"],
+    ["4da02c408340cca173272c167cabc92e", "Van Mor Gota", "Utsav · Gota, fringe", "4 Dec", "Sardi", "#0F4D3A", "₹7,200"],
+  ],
+  [
+    ["099df3db2817e17bf0bce51733883d0c", "Moti Hans Ivory", "Heirloom · Moti, stones", "19 Dec", "Vivah Panchami", "#8E1F4A", "₹6,400"],
+    ["d366a4f2ddf15f4b6365b213c0a74bab", "Hans Jodi Stone", "Heirloom · Stone work", "19 Dec", "Vivah Panchami", "#8E1F4A", "₹12,400"],
+    ["dcf20fc07739ccbd76b2a14b3ca33edd", "Neel Moti Kairi", "Utsav · Moti, sequins", "4 Dec", "Vivah Panchami", "#8E1F4A", "₹6,800"],
+  ],
+] as const;
 
-const FEATURED = {
-  name: "Meera Joshi",
-  city: "Jaipur",
-  piece: "Mor Mukut Peela · size 4",
-  image: "/images/hero-thakur.jpg",
-  quote: "Lalla’s name in zari is exactly the spelling we use at home. The peacock border catches the diya light.",
-};
-
-const NOTES = [
-  {
-    name: "Ananya Sharma",
-    city: "Pune",
-    piece: "Rangeela Kamal · size 3",
-    image: "/images/211bc59b6dde1cddf12b721c44fcf19a.jpg",
-    quote: "They sent progress photos from the adda, and the finished poshak sat perfectly on our size 3 Laddu Gopal.",
-  },
-  {
-    name: "Rahul & Isha Mehta",
-    city: "Ahmedabad",
-    piece: "Jugal Jodi · Radhashtami",
-    image: "/images/keepsake-box.jpg",
-    quote: "Radha and Kanha arrived as a pair for Radhashtami. The keepsake box is still on our mandir shelf.",
-  },
+const TABS = ["Bestsellers", "New arrivals", "Fastest delivery", "Sardi Seva", "Vivah Panchami picks"];
+const NAMES = ["लल्ला", "कान्हा", "गोपाल", "Lalla", "Kanha"];
+const COLOURS = [
+  ["#F2C81B", "Peela"],
+  ["#123F6B", "Peacock blue"],
+  ["#C2185B", "Rani pink"],
+  ["#F3EEE4", "Ivory"],
+  ["#2E8B57", "Tota green"],
+  ["#E07B22", "Kesari"],
+  ["#2AA9C9", "Firozi"],
+  ["#7A1E2C", "Maroon"],
 ];
 
 export function HomePage() {
+  const [slide, setSlide] = useState(0);
+  const [tab, setTab] = useState(0);
+  const [name, setName] = useState("लल्ला");
+  const rail = useRef<HTMLDivElement>(null);
+  const current = SLIDES[slide];
+
   return (
-    <main className="dk-home">
-      <section className="dk-hero">
-        <div className="dk-aarti" aria-hidden="true" />
-        <div className="dk-hero-copy">
-          <p className="dk-kicker">
-            <span className="dk-diya dk-diya-sm" aria-hidden="true">
-              <span className="dk-flame" />
-            </span>
-            Designer poshaks · Hand embroidered in Vrindavan
-          </p>
-          <h1>
-            Sewn for your <em>Thakurji.</em>
-          </h1>
-          <p className="dk-lede">
-            Heirloom zardozi, gota-patti and resham, stitched after you order, with the name you call Him embroidered in gold thread.
-          </p>
-          <div className="dk-hero-actions">
-            <Link className="dk-btn" href="/collections">
-              Explore collections
-            </Link>
-            <Link className="dk-btn dk-btn-ghost" href="/custom">
-              Design with our team
-            </Link>
-          </div>
-          <ul className="dk-assurances">
-            <li>100% hand embroidery</li>
-            <li>Name preview before stitching</li>
-            <li>Progress photos on WhatsApp</li>
-          </ul>
-        </div>
-        <div className="dk-parda" aria-hidden="true">
-          <span className="dk-parda-rod" />
-          <span className="dk-parda-jyoti" />
-          <span className="dk-dori dk-dori-left">
-            <i />
-            <b />
-          </span>
-          <span className="dk-dori dk-dori-right">
-            <i />
-            <b />
-          </span>
-          <div className="dk-parda-side dk-parda-left">
-            <span />
-            <span />
-            <span />
-          </div>
-          <div className="dk-parda-side dk-parda-right">
-            <span />
-            <span />
-            <span />
-          </div>
-        </div>
-        <div className="dk-hero-stage">
-          <div className="dk-mandala" aria-hidden="true" />
-          <span className="dk-petal" />
-          <span className="dk-petal dk-petal-2" />
-          <span className="dk-petal dk-petal-3" />
-          <figure>
-            <img
-              src="/images/hero-thakur.jpg"
-              alt="Laddu Gopal in a yellow peacock poshak, lit by a diya in a Vrindavan mandir"
-            />
-          </figure>
-        </div>
-      </section>
-
-      <section className="dk-band">
-        <div className="dk-wrap dk-collections">
-          <div className="dk-section-head">
-            <div>
-              <p className="dk-kicker">The collections</p>
-              <h2>Four ways to dress Him</h2>
-            </div>
-            <Link href="/collections">View all designs</Link>
-          </div>
-          <div className="dk-grid">
-            {COLLECTIONS.map((item) => (
-              <Link key={item.name} href={item.href} className="dk-card">
-                <span className="dk-card-photo">
-                  <img src={item.image} alt="" />
-                </span>
-                <span className="dk-card-copy">
-                  <strong>{item.name}</strong>
-                  <em>{item.note}</em>
-                  <span>
-                    {item.price}
-                    <i>{item.time}</i>
-                  </span>
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="dk-bespoke" id="karigars">
-        <div className="dk-wrap dk-split">
-          <figure>
-            <img src="/images/karigar-hands.jpg" alt="A karigar stitching a gold peacock feather into yellow silk" />
-          </figure>
+    <main className="dk-v5">
+      <section className="dk-v5-hero" style={{ background: current.bg }}>
+        <div className="dk-v5-hero-copy">
+          <span>{current.eyebrow}</span>
+          <h1>{current.title}</h1>
+          <p>{current.sub}</p>
           <div>
-            <p className="dk-kicker">Bespoke</p>
-            <h2>His name, in thread. Your vision, with our designers.</h2>
-            <p>
-              For Janmashtami, a birthday, or a poshak you have pictured for years — share the idol’s size, His name, and the work you love. A DivineKraft advisor plans it with you. Nothing is stitched until the sketch is approved.
-            </p>
-            <div className="dk-hero-actions">
-              <Link className="dk-btn" href="/custom">
-                Start my design brief
-              </Link>
-              <a className="dk-btn dk-btn-ghost" href="https://wa.me/919876543210">
-                Chat on WhatsApp
-              </a>
-            </div>
+            <Link className="dk-v5-gold" href={current.href ?? "/collections"}>{current.cta}</Link>
+            <Link className="dk-v5-line" href="/collections">{current.cta2}</Link>
           </div>
-        </div>
-      </section>
-
-      <ProductRail />
-
-      <section className="dk-how" id="how">
-        <div className="dk-wrap">
-          <div className="dk-how-head">
-            <div>
-              <p className="dk-kicker">The seva</p>
-              <h2>How a custom poshak is made</h2>
-            </div>
-            <p>Five steps, about three weeks. The needle starts only after you have seen the sketch and approved His name.</p>
-          </div>
-          <ol className="dk-journey">
-            {STEPS.map((step) => (
-              <li key={step.n}>
-                <b>{step.n}</b>
-                <div>
-                  <em>{step.when}</em>
-                  <strong>{step.title}</strong>
-                  <p>{step.copy}</p>
-                </div>
-                <img src={step.image} alt={step.alt} />
-              </li>
+          <em>{current.note}</em>
+          <div className="dk-v5-dots">
+            <button type="button" aria-label="Previous slide" onClick={() => setSlide((slide + SLIDES.length - 1) % SLIDES.length)}>‹</button>
+            {SLIDES.map((item, index) => (
+              <button key={item.title} type="button" aria-label={`Show slide ${index + 1}`} onClick={() => setSlide(index)}>
+                <i className={index === slide ? "is-on" : undefined} />
+              </button>
             ))}
-          </ol>
-          <Link className="dk-btn" href="/custom">
-            Start my design brief
-          </Link>
+            <button type="button" aria-label="Next slide" onClick={() => setSlide((slide + 1) % SLIDES.length)}>›</button>
+          </div>
+        </div>
+        <div className="dk-v5-hero-art">
+          <span className="dk-v5-chip"><small>{current.chipTop}</small>{current.chip}</span>
+          <div className="dk-v5-orb">
+            <img src={current.img} alt={current.alt} />
+          </div>
+          <div className="dk-v5-orb dk-v5-orb-sm">
+            <img src={current.img2} alt="" />
+          </div>
         </div>
       </section>
 
-      <section className="dk-notes">
-        <div className="dk-wrap">
-          <div className="dk-section-head">
-            <div>
-              <p className="dk-kicker">From their homes</p>
-              <h2>They dressed Him, and wrote back</h2>
-            </div>
-            <span className="dk-score">4.9 · 128 seva notes</span>
+      <section className="dk-v5-deity">
+        <div className="dk-v5-head">
+          <div>
+            <h2>Shop by deity</h2>
+            <p>Choose your Thakurji. Every design is stitched to His size, with His name.</p>
           </div>
-          <article className="dk-letter">
-            <figure>
-              <img src={FEATURED.image} alt="Laddu Gopal dressed in the Mor Mukut Peela poshak" />
-              <figcaption>{FEATURED.piece}</figcaption>
-            </figure>
-            <div>
-              <span className="dk-stars" aria-label="5 stars">★★★★★</span>
-              <blockquote>{FEATURED.quote}</blockquote>
-              <p>
-                <strong>{FEATURED.name}</strong>
-                <span>{FEATURED.city}</span>
-              </p>
-            </div>
-          </article>
-          <div className="dk-notes-row">
-            {NOTES.map((note) => (
-              <article key={note.name}>
-                <img src={note.image} alt="" />
+          <Link href="/collections">All deities →</Link>
+        </div>
+        <div className="dk-v5-deity-grid">
+          <Link href="/collections" className="dk-v5-lead">
+            <span>
+              <i>Most loved</i>
+              <strong>Laddu Gopal</strong>
+              <em>Poshaks in sizes 0–6, from daily seva to heavy festival zardozi. His name embroidered free.</em>
+            </span>
+            <span className="dk-v5-lead-meta">
+              <b>8 designs</b>
+              <b>Sizes 0–6</b>
+              <u>Shop Laddu Gopal →</u>
+            </span>
+            <img src="/images/laddu-gopal-dressed.jpg" alt="Laddu Gopal in a yellow poshak" />
+          </Link>
+          <div>
+            {[
+              ["#8E1F4A", "Radha Krishna", "Jugal sets, matched pair", "/images/jugal-poshaks.jpg"],
+              ["#B5541B", "Nitai Gaur", "Gaur-Nitai pair poshaks", "/images/6c8b5180806f0b3f31905b7b0831b0be.jpg"],
+              ["#9E1B32", "Mata Rani", "Chunri, lehenga & shringaar", "/images/dcf20fc07739ccbd76b2a14b3ca33edd.jpg"],
+              ["#1F5E45", "Ram Darbar", "Ram, Sita, Lakshman & Hanuman", "/images/099df3db2817e17bf0bce51733883d0c.jpg"],
+            ].map(([color, title, note, image]) => (
+              <Link key={title} href="/collections" style={{ background: color }}>
+                <strong>{title}</strong>
+                <em>{note}</em>
+                <b>Shop →</b>
+                <img src={image} alt="" />
+              </Link>
+            ))}
+          </div>
+        </div>
+        <p className="dk-v5-also">
+          <span>Also for:</span>
+          {["Banke Bihari ji", "Shrinathji", "Hanuman ji", "Ganesh ji", "Shiv Parivar"].map((item) => (
+            <Link key={item} href="/collections">{item}</Link>
+          ))}
+        </p>
+      </section>
+
+      <section className="dk-v5-loved">
+        <div className="dk-v5-head">
+          <h2>Loved by devotees</h2>
+          <Link href="/collections">See all →</Link>
+        </div>
+        <div className="dk-v5-tabs" role="tablist">
+          {TABS.map((label, index) => (
+            <button key={label} type="button" role="tab" aria-selected={tab === index} className={tab === index ? "is-on" : undefined} onClick={() => setTab(index)}>
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="dk-v5-rail-wrap">
+          <button type="button" aria-label="Scroll left" onClick={() => rail.current?.scrollBy({ left: -280, behavior: "smooth" })}>‹</button>
+          <div className="dk-v5-rail" ref={rail}>
+            {LISTS[tab].map((item) => (
+              <article key={item[1]}>
+                <Link href="/product/mor-mukut-peela-poshak">
+                  <img src={`/images/${item[0]}.jpg`} alt={item[1]} />
+                  <i style={{ background: item[5] }}>{item[4]}</i>
+                </Link>
                 <div>
-                  <span className="dk-stars" aria-label="5 stars">★★★★★</span>
-                  <blockquote>{note.quote}</blockquote>
-                  <p>
-                    <strong>{note.name}</strong>
-                    <span>
-                      {note.city} · {note.piece}
-                    </span>
-                  </p>
+                  <Link href="/product/mor-mukut-peela-poshak">{item[1]}</Link>
+                  <span>{item[2]}</span>
+                  <em>Arrives by {item[3]}</em>
+                  <p><strong>{item[6]}</strong><Link href="/product/mor-mukut-peela-poshak">Add name</Link></p>
                 </div>
               </article>
             ))}
           </div>
+          <button type="button" aria-label="Scroll right" onClick={() => rail.current?.scrollBy({ left: 280, behavior: "smooth" })}>›</button>
         </div>
       </section>
 
-      <section className="dk-close">
-        <img src="/images/vrindavan-dawn.jpg" alt="" />
+      <section className="dk-v5-name">
         <div>
-          <p className="dk-kicker">Vrindavan</p>
-          <h2>Har Thakurji ki apni poshak.</h2>
-          <p>Festival orders close three weeks before each utsav, so the karigars have time to do it right.</p>
-          <Link className="dk-btn" href="/custom">
-            Plan a custom poshak
-          </Link>
+          <h2>Type His name.<br />See it in zari.</h2>
+          <label htmlFor="hisname">What do you call your Thakurji? Embroidered free on every poshak.</label>
+          <input id="hisname" value={name} onChange={(event) => setName(event.target.value)} placeholder="e.g. Lalla, Kanha, गोपाल" />
+          <div>
+            {NAMES.map((item) => (
+              <button key={item} type="button" onClick={() => setName(item)}>{item}</button>
+            ))}
+          </div>
+          <Link href="/collections">Find a poshak for {name.trim() || "Him"} →</Link>
+        </div>
+        <div className="dk-v5-name-plate">
+          <img src="/images/zari-detail.jpg" alt="Gold zari embroidery" />
+          <strong>{name.trim() || "His name"}</strong>
         </div>
       </section>
+
+      <section className="dk-v5-shring">
+        <img src="/images/hero-thakur.jpg" alt="Thakurji dressed with mukut and poshak" />
+        <div>
+          <p>Complete the shringaar</p>
+          <h2>Jewellery matched to His poshak</h2>
+          <span>Pick a poshak and we suggest the mukut, kundal and mala that go with it, or make one to match.</span>
+          <div>
+            {["Mor mukut", "Kundal", "Mala & haar", "Bansuri", "Kamarbandh", "Payal & kada"].map((item) => (
+              <Link key={item} href="/collections"><b>{item}</b><em>From ₹650</em></Link>
+            ))}
+          </div>
+          <p className="dk-v5-actions">
+            <Link className="dk-btn" href="/collections">Shop shringaar</Link>
+            <Link className="dk-btn dk-btn-ghost" href="/custom">Match my poshak</Link>
+          </p>
+        </div>
+      </section>
+
+      <section className="dk-v5-custom">
+        <p>Custom design</p>
+        <h2>Have a design? We’ll make it.</h2>
+        <span>4 simple stages · free consult · pay only after you approve</span>
+        <ol>
+          {[
+            ["#7A1E2C", "Share your idea", "Send a photo, link or voice note", "2 min"],
+            ["#123F6B", "Free design call", "We plan colours, motifs & His name", "Within 24 hrs"],
+            ["#1F5E45", "Approve & pay", "See the sketch and price. Pay 50% only if you like it", "Within 48 hrs"],
+            ["#B5541B", "Handmade for Him", "Stitched in Vrindavan, photos on WhatsApp", "12–30 days"],
+          ].map(([color, title, copy, time], index) => (
+            <li key={title} style={{ background: color }}>
+              <b>{index + 1}</b>
+              <strong>{title}</strong>
+              <em>{copy}</em>
+              <i>{time}</i>
+            </li>
+          ))}
+        </ol>
+        <p className="dk-v5-actions">
+          <a className="dk-v5-wa" href="https://wa.me/918285003300" target="_blank" rel="noopener noreferrer">Start on WhatsApp</a>
+          <Link className="dk-btn dk-btn-ghost" href="/custom">Fill the design brief</Link>
+        </p>
+      </section>
+
+      <section className="dk-v5-colour">
+        <h2>Shop by colour</h2>
+        <div>
+          {COLOURS.map(([color, label]) => (
+            <Link key={label} href="/collections">
+              <i style={{ background: color }} />
+              {label}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="dk-v5-watch">
+        <div className="dk-v5-head">
+          <div>
+            <h2>Watch the seva</h2>
+            <p>From the karigar’s frame to your mandir</p>
+          </div>
+          <Link href="/journal">Follow us on Instagram & YouTube →</Link>
+        </div>
+        <div className="dk-v5-films">
+          <Link href="/about">
+            <img src="/images/karigar-hands.jpg" alt="A karigar stitching zari" />
+            <span><small>Featured film</small><strong>How a DivineKraft poshak is made</strong></span>
+          </Link>
+          <div>
+            {[
+              ["/images/zari-detail.jpg", "A karigar at the adda"],
+              ["/images/vrindavan-dawn.jpg", "Temple shringaar, Vrindavan"],
+              ["/images/keepsake-box.jpg", "Unboxing a keepsake set"],
+              ["/images/diya-marigold.jpg", "Seva at the mandir"],
+            ].map(([src, label]) => (
+              <Link key={label} href="/journal">
+                <img src={src} alt="" />
+                <span>{label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { HomePage } from "@/components/HomePage";
 
 export const metadata: Metadata = {
-  title: "Sewn for your Thakurji",
-  description: "Heirloom-grade zardozi, gota-patti and resham poshaks, stitched in Vrindavan after you order, with His name in gold thread.",
+  title: "Poshaks for your Thakurji",
+  description: "Shop handmade poshaks from Vrindavan. Mor Mukut Peela from ₹4,850, plus Nitya, Utsav, Heirloom and Jugal Jodi sets, stitched after you order.",
 };
 
 export default function Page() {

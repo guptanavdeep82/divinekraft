@@ -95,7 +95,7 @@ function fillCopy(html: string) {
   out = out.replace(/\[X\]–\[X\] in|\[X\]–\[X\] cm|\[X\] in/g, () => sizeValues[sizeIndex++] ?? "7 in");
 
   const phrases: Array<[string, string]> = [
-    ["[COMPANY NAME, GSTIN]", "DivineKraft Atelier Pvt. Ltd. · GSTIN 09AADCD1842E1Z5"],
+    ["[COMPANY NAME, GSTIN]", "DivineKraft Atelier Pvt. Ltd."],
     ["[STUDIO ADDRESS]", "18, Banke Bihari Marg"],
     ["[CITY, PINCODE]", "Vrindavan, 281121"],
     ["[INSTAGRAM HANDLE]", "divinekraft"],
@@ -107,7 +107,7 @@ function fillCopy(html: string) {
     ["[Customer name]", "Ananya Sharma"],
     ["[HOURS]", "10:00–6:30, Tuesday to Sunday"],
     ["[EMAIL]", "seva@divinekraft.com"],
-    ["[NUMBER]", "+91 98765 43210"],
+    ["[NUMBER]", "+91 82850 03300"],
     ["[DATE]", "12 August 2026"],
     ["[PIN]", "281121"],
     ["[XXXX]", "1842"],

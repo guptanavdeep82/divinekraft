@@ -3335,7 +3335,7 @@ body.dk-nav-open {
   background: #fff;
 }
 
-.dk-v5-custom > p {
+.dk-v5-custom > p:first-of-type {
   margin: 0;
   color: var(--gold);
   font-size: 13px;
@@ -3402,7 +3402,7 @@ body.dk-nav-open {
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-  margin-top: 18px;
+  margin: 28px 0 0;
 }
 
 .dk-v5-wa {
@@ -3536,6 +3536,7 @@ body.dk-nav-open {
     grid-template-columns: 1fr;
   }
 
+  .dk-v5-actions { margin-top: 36px; }
   .dk-v5-hero-art { min-height: 320px; }
   .dk-v5-lead img { width: 180px; height: 180px; margin-top: -90px; }
   .dk-v5-shring > div > div { grid-template-columns: 1fr 1fr; }
